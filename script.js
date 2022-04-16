@@ -1,4 +1,4 @@
-let graph = {'a':{'b':8,'c':6.5, 'i':6.7, 'f':7},
+let graph2 = {'a':{'b':8,'c':6.5, 'i':6.7, 'f':7},
          'b':{'c':6.5, 'a':8},
          'c':{'d':4, 'b':6.5},
          'd':{'e':6, 'i':4},
@@ -10,69 +10,77 @@ let graph = {'a':{'b':8,'c':6.5, 'i':6.7, 'f':7},
          'j':{'h':10, 'e':10}
         };
 
-//console.log(graph);
 
-unVisited = [];
+//////////////////////
+function dijkstra(graph, start) {
 
-for (var key in graph ) unVisited.push(key);
-//console.log(unVisited);
+  unVisited = [];
 
-distances = {};
-predecessors = {};
-infinity = 999999;
-start='a';
-
-for (var node of unVisited ) {
-  if (node == start)
-    distances[node] = 0;
-  else
-    distances[node] = infinity;
-}
-
-while (unVisited.length > 0) { 
-  //console.log(unVisited)
-  m = infinity;
-  focusNode = ''
-  for (const n in distances) {
-    if (!unVisited.includes(n)) continue;
-    if (distances[n] <= m) {
-      m = distances[n]
-      focusNode = n
-    }
-  }    
-  const index = unVisited.indexOf(focusNode);
-
-  if (index > -1) {
-    unVisited.splice(index, 1);
-}
+  for (var key in graph ) unVisited.push(key);
+  //console.log(unVisited);
   
-  //console.log(graph[focusNode])
-
-  // update distance with the focusNode neighbors
+  distances = {};
+  predecessors = {};
+  infinity = 999999;
+  start='a';
   
-  for (var key in graph[focusNode]) {
-    w = graph[focusNode][key]
-    var new_dist = distances[focusNode] + w;
-    if (new_dist < distances[key]) {
-        distances[key]= new_dist
-        predecessors[key]=focusNode
-      }
-  }      
-}
-console.log(distances);
-
-end ='j'
-current=end
-path=[]
-while (true) {
-  path.unshift(current)
-  current = predecessors[current]
-  if (current == start ){
-    path.unshift(current)
-    break
+  for (var node of unVisited ) {
+    if (node == start)
+      distances[node] = 0;
+    else
+      distances[node] = infinity;
   }
+  
+  while (unVisited.length > 0) { 
+    //console.log(unVisited)
+    m = infinity;
+    focusNode = ''
+    for (const n in distances) {
+      if (!unVisited.includes(n)) continue;
+      if (distances[n] <= m) {
+        m = distances[n]
+        focusNode = n
+      }
+    }   
+    
+    // remove focusNode
+    const index = unVisited.indexOf(focusNode);
+    if (index > -1) {
+      unVisited.splice(index, 1);
+    }
+      
+    // update distance with the focusNode neighbors
+    
+    for (var key in graph[focusNode]) {
+      w = graph[focusNode][key]
+      var new_dist = distances[focusNode] + w;
+      if (new_dist < distances[key]) {
+          distances[key] = new_dist;
+          predecessors[key] = focusNode;
+        }
+    }      
+  }
+  
+  return {distances, predecessors}; 
 }
-console.log(distances[end])
-console.log(path)
 
+///////////
+function shortestPath(graph, start, end){
+  res = dijkstra(graph, 'a');
+  current=end;
+  path=[];
+  while (true) {
+    path.unshift(current);
+    current = res.predecessors[current];
+    if (current == start) {
+      path.unshift(current);
+      break;
+    }
+  }
+  distance = res.distances[end];
+  return {path, distance};
+}
 
+output = shortestPath(graph2, 'a', 'j');
+
+console.log(output);
