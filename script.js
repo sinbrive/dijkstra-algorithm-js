@@ -5,11 +5,10 @@ function dijkstra(graph, start) {
   unVisited = [];
 
   for (var key in graph ) unVisited.push(key);
-  //console.log(unVisited);
   
   distances = {};
   predecessors = {};
-  infinity = 999999;
+  infinity = 999;
 
   for (var node of unVisited ) {
     if (node == start)
@@ -37,7 +36,6 @@ function dijkstra(graph, start) {
     }
       
     // update distance with the focusNode neighbors
-    
     for (var key in graph[focusNode]) {
       w = graph[focusNode][key]
       var new_dist = distances[focusNode] + w;
