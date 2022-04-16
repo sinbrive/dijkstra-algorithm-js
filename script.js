@@ -10,8 +10,7 @@ function dijkstra(graph, start) {
   distances = {};
   predecessors = {};
   infinity = 999999;
-  start='a';
-  
+
   for (var node of unVisited ) {
     if (node == start)
       distances[node] = 0;
@@ -54,7 +53,7 @@ function dijkstra(graph, start) {
 
 ///////////
 function shortestPath(graph, start, end){
-  res = dijkstra(graph, 'a');
+  res = dijkstra(graph, start);
   current = end;
   path = [];
   while (true) {
