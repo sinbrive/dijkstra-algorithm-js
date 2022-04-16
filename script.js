@@ -10,12 +10,12 @@ let graph = {'a':{'b':8,'c':6.5, 'i':6.7, 'f':7},
          'j':{'h':10, 'e':10}
         };
 
-console.log(graph);
+//console.log(graph);
 
 unVisited = [];
 
 for (var key in graph ) unVisited.push(key);
-console.log(unVisited);
+//console.log(unVisited);
 
 distances = {};
 predecessors = {};
@@ -29,7 +29,8 @@ for (var node of unVisited ) {
     distances[node] = infinity;
 }
 
-while (unVisited) {  
+while (unVisited.length > 0) { 
+  //console.log(unVisited)
   m = infinity;
   focusNode = ''
   for (const n in distances) {
@@ -39,9 +40,11 @@ while (unVisited) {
       focusNode = n
     }
   }    
-  //console.log(focusNode);
-  
-  unVisited.pop(focusNode)
+  const index = unVisited.indexOf(focusNode);
+
+  if (index > -1) {
+    unVisited.splice(index, 1);
+}
   
   //console.log(graph[focusNode])
 
@@ -57,4 +60,19 @@ while (unVisited) {
   }      
 }
 console.log(distances);
+
+end ='j'
+current=end
+path=[]
+while (true) {
+  path.unshift(current)
+  current = predecessors[current]
+  if (current == start ){
+    path.unshift(current)
+    break
+  }
+}
+console.log(distances[end])
+console.log(path)
+
 
