@@ -1,15 +1,3 @@
-let graph2 = {'a':{'b':8,'c':6.5, 'i':6.7, 'f':7},
-         'b':{'c':6.5, 'a':8},
-         'c':{'d':4, 'b':6.5},
-         'd':{'e':6, 'i':4},
-         'e':{'d':6, 'j':10},
-         'f':{'a':7, 'g':2.5},
-         'g':{'f':2.5, 'h':4.5, 'i':5.5},
-         'h':{'i':7, 'g':4.5,'j':10},
-         'i':{'a':6.7, 'g':5.5, 'd':4, 'h':7},
-         'j':{'h':10, 'e':10}
-        };
-
 
 //////////////////////
 function dijkstra(graph, start) {
@@ -67,8 +55,8 @@ function dijkstra(graph, start) {
 ///////////
 function shortestPath(graph, start, end){
   res = dijkstra(graph, 'a');
-  current=end;
-  path=[];
+  current = end;
+  path = [];
   while (true) {
     path.unshift(current);
     current = res.predecessors[current];
@@ -80,6 +68,20 @@ function shortestPath(graph, start, end){
   distance = res.distances[end];
   return {path, distance};
 }
+
+
+let graph2 = {'a':{'b':8,'c':6.5, 'i':6.7, 'f':7},
+         'b':{'c':6.5, 'a':8},
+         'c':{'d':4, 'b':6.5},
+         'd':{'e':6, 'i':4},
+         'e':{'d':6, 'j':10},
+         'f':{'a':7, 'g':2.5},
+         'g':{'f':2.5, 'h':4.5, 'i':5.5},
+         'h':{'i':7, 'g':4.5,'j':10},
+         'i':{'a':6.7, 'g':5.5, 'd':4, 'h':7},
+         'j':{'h':10, 'e':10}
+        };
+
 
 output = shortestPath(graph2, 'a', 'j');
 
